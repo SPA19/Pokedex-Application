@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  resgister,
+  register,
   login,
   logout,
   profile
@@ -11,7 +11,7 @@ import { registerSchema, LoginSchema } from "../schemas/auth.schema.js";
 
 const router = Router();
 
-router.post("/register", validateSchema(registerSchema), resgister);
+router.post("/register", validateSchema(registerSchema), register);
 
 router.post("/login", validateSchema(LoginSchema), login);
 

@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import bcryp from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
 
-export const resgister = async (req, res) => {
+export const register = async (req, res) => {
   const { email, username, password } = req.body;
   try {
     const passwordHash = await bcryp.hash(password, 10);

@@ -9,8 +9,8 @@ export default {
       {
         light: {
           primary: "#FFFF00",
-          secondary: "#0000FF",
-          "primary-focus": "#FF0000",
+          secondary: "#FF0000",
+          "primary-focus": "#0000FF",
           color: "#000",
         },
       },
