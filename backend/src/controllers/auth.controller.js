@@ -3,9 +3,24 @@ import bcryp from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
 
 export const register = async (req, res) => {
-  const { email, username, password } = req.body;
+  const { username, email, password } = req.body;
   try {
+    const userFound = await User.findOne({
+      username,
+    });
+
+    if (userFound)
+      return res.status(400).json({ message: "Username already exists" });
+
+    const userEmail = await User.findOne({
+      email,
+    });
+
+    if (userEmail)
+      return res.status(400).json({ message: "Email already exists" });
+
     const passwordHash = await bcryp.hash(password, 10);
+
     const newUser = new User({
       username,
       email,
@@ -23,6 +38,7 @@ export const register = async (req, res) => {
       email: userSaved.email,
       createdAt: userSaved.createdAt,
       updatedAt: userSaved.updatedAt,
+      token,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,7 +60,6 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Incorrect Password" });
 
     const token = await createAccessToken({ id: userFound._id });
-
     res.cookie("token", token);
     res.json({
       id: userFound._id,
@@ -52,6 +67,7 @@ export const login = async (req, res) => {
       email: userFound.email,
       createdAt: userFound.createdAt,
       updatedAt: userFound.updatedAt,
+      token,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

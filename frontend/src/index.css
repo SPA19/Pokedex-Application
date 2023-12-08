@@ -5,3 +5,7 @@
 .input {
   border-width: 0px;
 }
+
+.card-body{
+  padding-bottom: 1.5rem;
+}

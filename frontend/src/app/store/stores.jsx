@@ -9,7 +9,7 @@ import {
   REGISTER,
 } from "redux-persist";
 
-import userSlice from "../../features/users/userSlice";
+import UserLogin from "../../features/users/userSlice";
 import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
@@ -19,7 +19,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  userSlice,
+  UserLogin,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
