@@ -9,3 +9,7 @@
 .card-body{
   padding-bottom: 1.5rem;
 }
+
+.animate-bounce{
+  animation: bounce 1s ;
+}
