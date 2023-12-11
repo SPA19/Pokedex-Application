@@ -14,7 +14,7 @@ export const CardLogin = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { createUser, isAuthenticated, messageError, pokemonsDetails, offset } =
+  const { createUser, isAuthenticated, messageError } =
     useSelector((state) => state.UserLogin);
   const [activeMessage, setActiveMessage] = useState(false);
 

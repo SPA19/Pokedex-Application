@@ -5,6 +5,7 @@ import axios from "axios";
 export const userSlice = createSlice({
   name: "UserLogin",
   initialState: {
+    searchName: null,
     allPokemons: [],
     pokemonsDetails: [],
     loginSucces: {},
@@ -18,6 +19,9 @@ export const userSlice = createSlice({
     offset: 0,
   },
   reducers: {
+    setSearchName(state, action) {
+      state.searchName = action.payload;
+    },
     setAllPokemons: (state, action) => {
       state.allPokemons = action.payload;
     },
@@ -52,6 +56,7 @@ export const userSlice = createSlice({
 });
 
 export const {
+  setSearchName,
   setPokemonsDetails,
   setAllPokemons,
   setLoginSuccess,
@@ -97,7 +102,7 @@ export const loginCreateThunk = (singIn) => async (dispatch) => {
 };
 //* peticiones a la api de pokemon (pokeapi)
 
-export const getGlobalPokemons = () => async (dispatch) => {
+export const getGlobalPokemons = (search) => async (dispatch) => {
   try {
     await axios
       .get(Global.baseUrlPokeApi + `pokemon?limit=100000&offset=0`)
@@ -107,9 +112,11 @@ export const getGlobalPokemons = () => async (dispatch) => {
           return pokemonDetails.data;
         });
         Promise.all(promises).then((pokemonDetails) => {
-          dispatch(setAllPokemons(pokemonDetails));
+          const filterPoke = pokemonDetails.filter(
+            (pokemon) => pokemon?.name === search
+          );
+          dispatch(setAllPokemons(filterPoke));
           dispatch(setLoading(false));
-
         });
       });
   } catch (error) {
@@ -128,7 +135,7 @@ export const getLimitPokemons =
             return pokemonDetails.data;
           });
           Promise.all(promises).then((pokemonDetails) => {
-            dispatch(setPokemonsDetails([...pokeData,...pokemonDetails]));
+            dispatch(setPokemonsDetails([...pokeData, ...pokemonDetails]));
             dispatch(setLoading(false));
           });
         });
@@ -139,11 +146,8 @@ export const getLimitPokemons =
 
 export const getPokemonById = (id) => async () => {
   try {
-    await axios.get(Global.baseUrlPokeApi + `pokemon/${id}`).then((res) => {
-      console.log(res?.data);
-    });
+    await axios.get(Global.baseUrlPokeApi + `pokemon/${id}`).then((res) => {});
   } catch (error) {
     console.log(error?.response?.data?.message);
   }
 };
-

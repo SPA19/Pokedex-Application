@@ -5,7 +5,6 @@ import {
   Error404Page,
   LoginPage,
   PokemonPage,
-  ProfilePage,
   SerchPage,
 } from "./pages";
 
@@ -15,9 +14,9 @@ export const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index element={<LoginPage />} />
-          <Route path="pokemon/:id" element={<SerchPage />} />
           <Route path="pokemons" element={<PokemonPage />} />
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="serch" element={<SerchPage/>} />
+          <Route path="pokemon/:id" element={ <Error404Page/>} />
         </Route>
         <Route path="*" element={<Error404Page />} />
       </Routes>

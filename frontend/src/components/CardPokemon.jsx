@@ -5,7 +5,7 @@ export const CardPokemon = ({ pokemon }) => {
   
   return (
     <Link
-      to={`/pokemon/${pokemon.id}`}
+      to={`/pokemons`}
       className="card w-96 hover:animate-pulse"
     >
       <div className="card w-96 shadow-xl bg-gray-100">
