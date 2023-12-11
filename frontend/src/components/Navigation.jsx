@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import Logo from "../assets/img/Pokémon_logo.svg.png";
 import ProfileAnonymous from "../assets/img/user_default.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Navigation = () => {
+  const dispatch = useDispatch();
+  const isAuthToken = localStorage.getItem("token");
   const { isAuthenticated } = useSelector((state) => state.UserLogin);
+  
+  const [search, setSearch] = useState("");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(isAuthenticated(false));
+  };
 
   return (
     <div>
@@ -15,15 +24,17 @@ export const Navigation = () => {
             <img className="w-auto h-[4rem]" src={Logo} alt="Logo pokemon" />
           </Link>
         </div>
-        {isAuthenticated && (
+        {isAuthToken && (
           <div className="flex-none gap-2">
             <div className="form-control flex flex-row">
               <input
                 type="text"
                 placeholder="Search"
-                className="input input-bordered w-28 md:w-auto"
+                value={search}
+                className="input input-bordered w-80"
+                onChange={(e)=> setSearch(e.target.value)}
               />
-              <button className="btn btn-ghost btn-circle">
+              <button className="btn btn-outline btn-circle shadow-lg mx-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -47,10 +58,7 @@ export const Navigation = () => {
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS Navbar component"
-                    src={ProfileAnonymous}
-                  />
+                  <img alt="Profile" src={ProfileAnonymous} />
                 </div>
               </div>
               <ul
@@ -58,22 +66,18 @@ export const Navigation = () => {
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <Link to="/profile" className="justify-between">
-                    Profile
+                  <Link to="/pokemons">Home</Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={handleLogout}>
+                    Logout
                   </Link>
-                </li>
-                <li>
-                  <Link to="/">Login</Link>
-                </li>
-                <li>
-                  <Link to="/search">Logout</Link>
                 </li>
               </ul>
             </div>
           </div>
         )}
       </div>
-
       <Outlet />
     </div>
   );

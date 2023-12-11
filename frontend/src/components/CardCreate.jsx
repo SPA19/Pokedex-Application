@@ -16,7 +16,7 @@ export const CardCreate = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/search");
+      navigate("/pokemons");
     }
     if (messageErrCreate !== null) {
       setAlertMessage(true);

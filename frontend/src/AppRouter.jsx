@@ -15,8 +15,8 @@ export const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index element={<LoginPage />} />
-          <Route path="pokemon/:id" element={<PokemonPage />} />
-          <Route path="search" element={<SerchPage />} />
+          <Route path="pokemon/:id" element={<SerchPage />} />
+          <Route path="pokemons" element={<PokemonPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
         <Route path="*" element={<Error404Page />} />

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getLimitPokemons,
   loginUserThunk,
   setCreateUser,
   setMessageError,
+  setOffset,
 } from "../features/users/userSlice";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +14,15 @@ export const CardLogin = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { createUser, isAuthenticated, messageError } = useSelector(
-    (state) => state.UserLogin
-  );
+  const { createUser, isAuthenticated, messageError, pokemonsDetails, offset } =
+    useSelector((state) => state.UserLogin);
   const [activeMessage, setActiveMessage] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/search");
+      setTimeout(() => {
+        navigate("/pokemons");
+      }, 200);
     }
 
     if (messageError !== null) {
@@ -27,7 +30,7 @@ export const CardLogin = () => {
       setTimeout(() => {
         setActiveMessage(false);
         dispatch(setMessageError(null));
-      }, 1500);
+      }, 2000);
     }
   }, [isAuthenticated, messageError]);
 
