@@ -109,7 +109,7 @@ export const getGlobalPokemons = () => async (dispatch) => {
         Promise.all(promises).then((pokemonDetails) => {
           dispatch(setAllPokemons(pokemonDetails));
           dispatch(setLoading(false));
-          console.log(pokemonDetails);
+
         });
       });
   } catch (error) {
